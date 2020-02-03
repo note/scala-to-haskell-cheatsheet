@@ -147,9 +147,7 @@ Point {x = 3, y = 100}
 
 #### Pattern matching
 
-either pattern matching
-
-map over Right
+TBD
 
 
 ### Function composition
@@ -241,4 +239,7 @@ List(1, 1, 2, 2, 3, 3)
 * debugging (tracing, println)
 * for comprehension
 * tuples
+* Pattern matching
+* either pattern matching
+* map over Right
 * and others
