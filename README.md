@@ -32,16 +32,6 @@ double x = 2 * x
 
 Note the `:{` and `:}` in the first and last line. Besides of that it's the same as one would define the function in a source file.
 
-### Int type
-
-> Scala
-
-Int vs BigInteger
-
-> Haskell
-
-Int vs Integer
-
 ### `???`
 
 > Scala
@@ -56,10 +46,6 @@ Int vs Integer
 compute :: Int
 compute = undefined
 ```
-
-
-
-
 
 ### Case classes
 
@@ -165,7 +151,9 @@ either pattern matching
 map over Right
 
 
-### Function composition: `andThen`
+### Function composition
+
+### `andThen`
 
 > Scala
 
@@ -188,16 +176,17 @@ You can compose them as:
 Given:
 
 ```
-double :: Int -> Int; double x = 2 * x
-toInt
+toInt  :: String -> Int; toInt  x = read x
+double :: Int    -> Int; double x = 2 * x
 ```
 
 ```
-import Control.Arrow
-a >>> b
+> import Control.Arrow
+> (toInt >>> double) "5"
+10
 ```
 
-### Function composition: `compose`
+### `compose`
 
 > Scala
 
@@ -206,13 +195,14 @@ a >>> b
 10
 ```
 
-
 > Haskell
 
 ```
+> (double . toInt) "5"
+10
 ```
 
-
+### Lists
 
 #### Map through list
 
@@ -227,8 +217,6 @@ a >>> b
 ```
 map (\x -> x * x) [1 .. 10]
 ```
-
-
 
 #### Flatmap through list
 
@@ -246,7 +234,10 @@ List(1, 1, 2, 2, 3, 3)
 [1,1,2,2,3,3]
 ```
 
-higher order functions
-debugging (tracing, println)
-for comprehension
-tuples
+#### TODO:
+
+* higher order functions
+* debugging (tracing, println)
+* for comprehension
+* tuples
+* and others
