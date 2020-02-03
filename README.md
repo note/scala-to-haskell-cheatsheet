@@ -37,7 +37,7 @@ Note the `:{` and `:}` in the first and last line. Besides of that it's the same
 > Scala
 
 ```
-(double _).andThen(triple _)(5)
+def compute: Int = ???
 ```
 
 > Haskell
