@@ -65,7 +65,7 @@ data Point = Point { x :: Int
                    }
 ```
 
-If you need your datatype to be visible outside of the file it's defined in then remember to export it:
+If you need your datatype to be visible outside of the file, in which it's defined, then remember to export it:
 
 ```
 module YourModule ( Point(Point) )
@@ -134,7 +134,8 @@ module YourModule ( Point(Point, x, y) )
 > Scala
 
 ```
-Point(3, 15).copy(y = 100)
+> Point(3, 15).copy(y = 100)
+Point(3, 100)
 ```
 
 > Haskell
