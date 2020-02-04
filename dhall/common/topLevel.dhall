@@ -1,7 +1,19 @@
-let List_fold = https://raw.githubusercontent.com/dhall-lang/dhall-lang/master/Prelude/List/fold
+let Prelude = https://prelude.dhall-lang.org/package.dhall
+let T = ./types.dhall
+let F = ./functions.dhall
 
-let topLevel = \(subpageTitle: Text) -> \(cases: List Text) ->
-  let blob = List_fold Text cases Text (\(acc: Text) -> \(curr: Text) -> acc ++ curr) ""
+let renderMenuItem = \(menuItem: T.MenuItem) ->
+  if menuItem.isActive then
+    ''
+    <li><a href="${menuItem.filename}" class="selected">${menuItem.name}</a></li>
+    ''
+  else
+    ''
+    <li><a href="${menuItem.filename}">${menuItem.name}</a></li>
+    ''
+
+let topLevel = \(subpageTitle: Text) -> \(menuItems: List T.MenuItem) -> \(cases: List T.ExplainedComparison) ->
+  let blob = List/fold T.ExplainedComparison cases Text (\(acc: T.ExplainedComparison) -> \(curr: Text) -> (F.renderExplainedComparison acc) ++ curr) ""
   in ''
 <!DOCTYPE html><html>
 <head><title>From Scala to Haskell</title><meta charset="utf-8"><link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/highlightjs-github.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script></head>
@@ -9,9 +21,7 @@ let topLevel = \(subpageTitle: Text) -> \(cases: List Text) ->
 
   <div id="note">From Scala to Haskell</div>
   <ul>
-    <li><a class="selected" href="index.html">Basic</a></li>
-    <li><a href="functions.html">Functions</a></li>
-    <li><a href="classes.html">Classes</a></li>
+    ${Prelude.Text.concat (Prelude.List.map T.MenuItem Text renderMenuItem menuItems)}
   </ul>
 
   <div class="section"><div class="title">${subpageTitle}</div>
