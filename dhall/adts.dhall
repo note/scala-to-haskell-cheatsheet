@@ -63,6 +63,20 @@ In order to be able to use data constructors you need to export them with:
 ${exportSumType}
 '')
 
+let adtScala = ''
+sealed trait ClientError
+
+case class ParsingError(input: String, msg: String)
+case class HostUnavailable(host: String)
+case object OtherError
+''
+
+let adtHaskell = ''
+data ClientError = ParsingError { input :: String, msg :: String }
+				 | HostUnavailable { host :: String }
+				 | OtherError
+''
+
 -- TODO: use unit type so we don't need to replicate menu in a few places
 let menu = [
     T.mkMenuItem "Basics" "index.html" False,
@@ -75,5 +89,6 @@ in Toplevel.topLevel "Algebraic Data Types" menu [
 	F.mkSimpleComparison "Instantiating case classes" instantiateCCScala instantiateCCHaskell,
     F.mkSimpleComparison "Accessing fields" accessingFieldsScala accessingFieldsHaskell,
     F.mkSimpleComparison ".copy on case classes" copyScala copyHaskell,
-    F.mkComparison "Defining sealed trais hierarchy (sum types)" sumTypeScala [sumTypeHask]
+    F.mkComparison "Defining sealed trais hierarchy (sum types)" sumTypeScala [sumTypeHask],
+    F.mkSimpleComparison "ADTs (product types and sum types)" 
 ]
