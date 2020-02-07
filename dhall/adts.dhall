@@ -90,5 +90,5 @@ in Toplevel.topLevel "Algebraic Data Types" menu [
     F.mkSimpleComparison "Accessing fields" accessingFieldsScala accessingFieldsHaskell,
     F.mkSimpleComparison ".copy on case classes" copyScala copyHaskell,
     F.mkComparison "Defining sealed trais hierarchy (sum types)" sumTypeScala [sumTypeHask],
-    F.mkSimpleComparison "ADTs (product types and sum types)" 
+    F.mkSimpleComparison "ADTs (product types and sum types)" adtScala adtHaskell
 ]
