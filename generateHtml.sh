@@ -16,7 +16,7 @@ fi
 
 $DHALL_BIN --version
 
-# Find like one below is not an option because it always return exit code 0, even in case of dhall text failure
+# `find` like one below is not an option because it always returns exit code 0, even in case of dhall failure
 # find dhall -mindepth 1 -maxdepth 1 -name "*.dhall" -print -exec bash -c "dhall text <<< './'{} > {}.html" \;
 
 for f in dhall/*.dhall
