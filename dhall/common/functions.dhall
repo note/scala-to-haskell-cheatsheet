@@ -5,14 +5,14 @@ let T = ./types.dhall
 let renderHaskellCard = \(explained: T.Explained) -> 
 	let explainedText = Optional/fold Text explained.explanation Text (\(x: Text) -> x) ""
 	in ''
-        <div class="card"><div class="lang">${explained.title}</div><pre class="code"><code>${explained.code}</code></pre>
+        <div class="card"><div class="lang">${explained.title}</div><pre class="code"><code class="lang-haskell">${explained.code}</code></pre>
   			<div class="explanation">${explainedText}</div>
         </div> 
 ''
 
 let renderPair = \(scalaCode: Text) -> \(explained: T.Explained) -> ''
 	  <div class="pair">
-        <div class="card"><div class="lang">Scala</div><pre class="code"><code>${scalaCode}</code></pre>
+        <div class="card"><div class="lang">Scala</div><pre class="code"><code class="lang-scala">${scalaCode}</code></pre>
         </div>
         ${renderHaskellCard explained}
       </div>
@@ -47,14 +47,22 @@ let mkSimpleComparison = \(name: Text) -> \(scalaCode: Text) -> \(haskellCode: T
 let mkComparison = \(name: Text) -> \(scalaCode: Text) -> \(haskellExplanations: List T.Explained) -> 
 	T.mkExplainedComparison name scalaCode haskellExplanations
 
+let quoteExplanation = \(code: Text) -> ''
+<pre class="supplementaryCode"><code>${code}</code></pre>
+''
+
 let quoteCode = \(code: Text) -> ''
 <pre class="code"><code>${code}</code></pre>
 ''
 
+let code = \(x: Text) -> "<code>${x}</code>"
+
 in {
+	code						= code,
 	mkComparison 		  		= mkComparison,
 	mkSimpleComparison 		  	= mkSimpleComparison,
 	quoteCode					= quoteCode,
+	quoteExplanation			= quoteExplanation,
 	renderExplainedComparison 	= renderExplainedComparison,
 	simpleHask					= simpleHask
 }

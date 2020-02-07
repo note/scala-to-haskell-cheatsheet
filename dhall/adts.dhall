@@ -19,10 +19,11 @@ ${exportModule}
 '')
 
 let ccDerivedHaskell = ''
-{-# LANGUAGE DeriveGeneric #-} -- this needs to be at the top of a file
+ -- this needs to be at the top of a file
+{-# LANGUAGE DeriveGeneric #-}
 
 data Point = Point { x :: Int
-                        , y :: Int
+                   , y :: Int
                    } deriving (Eq, Generic Show)
 ''
 
@@ -73,14 +74,17 @@ case object OtherError
 
 let adtHaskell = ''
 data ClientError = ParsingError { input :: String, msg :: String }
-				 | HostUnavailable { host :: String }
-				 | OtherError
+                 | HostUnavailable { host :: String }
+                 | OtherError
 ''
 
 -- TODO: use unit type so we don't need to replicate menu in a few places
 let menu = [
     T.mkMenuItem "Basics" "index.html" False,
-    T.mkMenuItem "ADTs" "adts.html" True
+    T.mkMenuItem "ADTs" "adts.html" True,
+    T.mkMenuItem "Lists" "lists.html" False,
+    T.mkMenuItem "Option" "option.html" False,
+    T.mkMenuItem "for comprehension" "for-comprehension.html" False
 ]
 
 in Toplevel.topLevel "Algebraic Data Types" menu [

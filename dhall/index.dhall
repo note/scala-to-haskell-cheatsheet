@@ -6,15 +6,15 @@ let hask = T.mkExplained
 let simpleHask = F.simpleHask
 
 let funDef0 = ''
-double :: Int -> Int
-double x = 2 * x''
+triple :: Int -> Int
+triple x = 3 * x''
 
-let funDef1 = "double :: Int -> Int; double x = 2 *x"
+let funDef1 = "triple :: Int -> Int; triple x = 3 * x"
 
 let funDef2 = ''
 :{
-double :: Int -> Int
-double x = 2 * x
+triple :: Int -> Int
+triple x = 3 * x
 :}
 ''
 
@@ -23,11 +23,11 @@ Note the :{ and :} in the first and last line. Besides of that it's the same as 
 ''
 
 let haskellFunctionsDefs = [simpleHask funDef0,
-							hask "Haskell (GHCi)" funDef1 (Some "Many tutorials use let double .... There's no difference between those two notations in GHCi so it's up to you to decide ."),
+							hask "Haskell (GHCi)" funDef1 (Some "Many tutorials use let triple .... There's no difference between those two notations in GHCi so it's up to you to decide ."),
 							hask "Haskell (GHCi) - alternative" funDef2 (Some funDef2Explanation)
 						   ]
 
-let scalaFunctionDef = "def double(x: Int): Int = 2 * x"
+let scalaFunctionDef = "def triple(x: Int): Int = 3 * x"
 
 let questionMarksScala = "def compute: Int = ???"
 let questionMarksHaskell = ''
@@ -35,13 +35,48 @@ compute :: Int
 compute = undefined
 ''
 
+let andThenScala = ''
+// Given:
+val toInt: String => Int = Integer.parseInt
+val triple: Int => Int = x => 3 * x
+
+// You can compose them:
+(toInt andThen triple)("5")
+// res: 15
+''
+
+let andThenHaskell = ''
+-- Given:
+toInt  :: String -> Int; toInt  x = read x
+triple :: Int    -> Int; triple x = 3 * x
+
+-- You can compose them:
+(toInt >>> triple) "5"
+-- res: 15
+''
+
+let composeScala = ''
+> (triple compose toInt)("5")
+// res: 15
+''
+
+let composeHaskell = ''
+> (triple . toInt) "5"
+-- res: 15
+''
+
 -- TODO: use unit type so we don't need to replicate menu in a few places
 let menu = [
     T.mkMenuItem "Basics" "index.html" True,
-    T.mkMenuItem "ADTs" "adts.html" False
+    T.mkMenuItem "ADTs" "adts.html" False,
+	T.mkMenuItem "Lists" "lists.html" False,
+	T.mkMenuItem "Option" "option.html" False,
+	T.mkMenuItem "for comprehension" "for-comprehension.html" False
 ]
 
 in Toplevel.topLevel "Basics" menu [
 	F.mkComparison "Defining functions" scalaFunctionDef haskellFunctionsDefs,
-	F.mkSimpleComparison "???" questionMarksScala questionMarksHaskell
+	F.mkSimpleComparison "???" questionMarksScala questionMarksHaskell,
+	F.mkSimpleComparison "Function composition (andThen style)" andThenScala andThenHaskell,
+	F.mkSimpleComparison "Function composition (compose style)" composeScala composeHaskell
 ]
