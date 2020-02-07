@@ -13,96 +13,84 @@
 
   <div id="note">From Scala to Haskell</div>
   <ul>
-    <li><a href="index.html" class="selected">Basics</a></li>
+    <li><a href="index.html">Basics</a></li>
 <li><a href="adts.html">ADTs</a></li>
-<li><a href="lists.html">Lists</a></li>
+<li><a href="lists.html" class="selected">Lists</a></li>
 <li><a href="option.html">Option</a></li>
 <li><a href="for-comprehension.html">for comprehension</a></li>
 
   </ul>
 
-  <div class="section"><div class="title">Basics</div>
+  <div class="section"><div class="title">Lists</div>
 
     <div class="case">
-	<div class="name">Defining functions</div>
+	<div class="name">Creating a list</div>
 	  <div class="pair">
-        <div class="card"><div class="lang">Scala</div><pre class="code"><code class="lang-scala">def triple(x: Int): Int = 3 * x</code></pre>
+        <div class="card"><div class="lang">Scala</div><pre class="code"><code class="lang-scala">List(1, 2, 3)
+</code></pre>
         </div>
-                <div class="card"><div class="lang">Haskell</div><pre class="code"><code class="lang-haskell">triple :: Int -> Int
-triple x = 3 * x</code></pre>
+                <div class="card"><div class="lang">Haskell</div><pre class="code"><code class="lang-haskell">[1, 2, 3]
+</code></pre>
   			<div class="explanation"></div>
+        </div> 
+
+      </div>
+</div>
+<div class="case">
+	<div class="name">Creating a range</div>
+	  <div class="pair">
+        <div class="card"><div class="lang">Scala</div><pre class="code"><code class="lang-scala">(1 to 10).toList
+</code></pre>
+        </div>
+                <div class="card"><div class="lang">Haskell</div><pre class="code"><code class="lang-haskell">[1 .. 10]
+</code></pre>
+  			<div class="explanation"></div>
+        </div> 
+
+      </div>
+</div>
+<div class="case">
+	<div class="name">Map through a list</div>
+	  <div class="pair">
+        <div class="card"><div class="lang">Scala</div><pre class="code"><code class="lang-scala">(1 to 10).toList.map(x => x * x)
+</code></pre>
+        </div>
+                <div class="card"><div class="lang">Haskell</div><pre class="code"><code class="lang-haskell">map (\x -> x * x) [1 .. 10]
+</code></pre>
+  			<div class="explanation"><code>map</code> is defined only for list: <pre class="supplementaryCode"><code>map :: (a -> b) -> [a] -> [b]</code></pre>
+</div>
         </div> 
 
       </div>
 	  <div class="pair">
         <div class="card">
         </div>
-                <div class="card"><div class="lang">Haskell (GHCi)</div><pre class="code"><code class="lang-haskell">triple :: Int -> Int; triple x = 3 * x</code></pre>
-  			<div class="explanation">Many tutorials use let triple .... There's no difference between those two notations in GHCi so it's up to you to decide .</div>
+                <div class="card"><div class="lang">Haskell</div><pre class="code"><code class="lang-haskell">fmap (\x -> x * x) [1 .. 10]
+</code></pre>
+  			<div class="explanation"><code>fmap</code> is defined in terms of Functor: <pre class="supplementaryCode"><code>fmap :: Functor f => (a -> b) -> f a -> f b</code></pre>
+</div>
         </div> 
 
       </div>
 	  <div class="pair">
         <div class="card">
         </div>
-                <div class="card"><div class="lang">Haskell (GHCi) - alternative</div><pre class="code"><code class="lang-haskell">:{
-triple :: Int -> Int
-triple x = 3 * x
-:}
+                <div class="card"><div class="lang">Haskell</div><pre class="code"><code class="lang-haskell">(\x -> x * x) <$> [1 .. 10]
 </code></pre>
-  			<div class="explanation">Note the :{ and :} in the first and last line. Besides of that it's the same as one would define the function in a source file.
-</div>
+  			<div class="explanation"><code><$></code> is an infix operator for <code>fmap</code></div>
         </div> 
 
       </div>
 </div>
 <div class="case">
-	<div class="name">???</div>
+	<div class="name">Flatmap through a list</div>
 	  <div class="pair">
-        <div class="card"><div class="lang">Scala</div><pre class="code"><code class="lang-scala">def compute: Int = ???</code></pre>
-        </div>
-                <div class="card"><div class="lang">Haskell</div><pre class="code"><code class="lang-haskell">compute :: Int
-compute = undefined
-</code></pre>
-  			<div class="explanation"></div>
-        </div> 
-
-      </div>
-</div>
-<div class="case">
-	<div class="name">Function composition (andThen style)</div>
-	  <div class="pair">
-        <div class="card"><div class="lang">Scala</div><pre class="code"><code class="lang-scala">// Given:
-val toInt: String => Int = Integer.parseInt
-val triple: Int => Int = x => 3 * x
-
-// You can compose them:
-(toInt andThen triple)("5")
-// res: 15
+        <div class="card"><div class="lang">Scala</div><pre class="code"><code class="lang-scala">List(1,2,3).flatMap(x => List(x, x))
+// res: List(1, 1, 2, 2, 3, 3)
 </code></pre>
         </div>
-                <div class="card"><div class="lang">Haskell</div><pre class="code"><code class="lang-haskell">-- Given:
-toInt  :: String -> Int; toInt  x = read x
-triple :: Int    -> Int; triple x = 3 * x
-
--- You can compose them:
-(toInt >>> triple) "5"
--- res: 15
-</code></pre>
-  			<div class="explanation"></div>
-        </div> 
-
-      </div>
-</div>
-<div class="case">
-	<div class="name">Function composition (compose style)</div>
-	  <div class="pair">
-        <div class="card"><div class="lang">Scala</div><pre class="code"><code class="lang-scala">> (triple compose toInt)("5")
-// res: 15
-</code></pre>
-        </div>
-                <div class="card"><div class="lang">Haskell</div><pre class="code"><code class="lang-haskell">> (triple . toInt) "5"
--- res: 15
+                <div class="card"><div class="lang">Haskell</div><pre class="code"><code class="lang-haskell">[1,2,3] >>= \x -> [x,x]
+-- res: [1,1,2,2,3,3]
 </code></pre>
   			<div class="explanation"></div>
         </div> 
