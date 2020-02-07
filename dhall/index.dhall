@@ -52,17 +52,17 @@ triple :: Int    -> Int; triple x = 3 * x
 
 -- You can compose them:
 (toInt >>> triple) "5"
-15
+-- res: 15
 ''
 
 let composeScala = ''
 > (triple compose toInt)("5")
-15
+// res: 15
 ''
 
 let composeHaskell = ''
 > (triple . toInt) "5"
-15
+-- res: 15
 ''
 
 -- TODO: use unit type so we don't need to replicate menu in a few places

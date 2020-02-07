@@ -19,7 +19,7 @@ let topLevel = \(subpageTitle: Text) -> \(menuItems: List T.MenuItem) -> \(cases
 <head>
   <title>From Scala to Haskell</title>
   <meta charset="utf-8"><link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/default.min.css">
+  <link rel="stylesheet" href="css/highlightjs-github.css">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
   <script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/haskell.min.js"></script>

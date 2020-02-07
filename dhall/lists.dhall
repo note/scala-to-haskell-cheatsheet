@@ -55,13 +55,13 @@ let mapListHaskell = [
 					 ]
 
 let flatMapListScala = ''
-> List(1,2,3).flatMap(x => List(x, x))
-List(1, 1, 2, 2, 3, 3)
+List(1,2,3).flatMap(x => List(x, x))
+// res: List(1, 1, 2, 2, 3, 3)
 ''
 
 let flatMapListHaskell = ''
-> [1,2,3] >>= \x -> [x,x]
-[1,1,2,2,3,3]
+[1,2,3] >>= \x -> [x,x]
+-- res: [1,1,2,2,3,3]
 ''
 
 in Toplevel.topLevel "Lists" menu [
