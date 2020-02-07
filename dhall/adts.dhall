@@ -83,7 +83,8 @@ let menu = [
     T.mkMenuItem "Basics" "index.html" False,
     T.mkMenuItem "ADTs" "adts.html" True,
     T.mkMenuItem "Lists" "lists.html" False,
-    T.mkMenuItem "Option" "option.html" False
+    T.mkMenuItem "Option" "option.html" False,
+    T.mkMenuItem "for comprehension" "for-comprehension.html" False
 ]
 
 in Toplevel.topLevel "Algebraic Data Types" menu [

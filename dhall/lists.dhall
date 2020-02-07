@@ -10,7 +10,8 @@ let menu = [
     T.mkMenuItem "Basics" "index.html" False,
     T.mkMenuItem "ADTs" "adts.html" False,
     T.mkMenuItem "Lists" "lists.html" True,
-    T.mkMenuItem "Option" "option.html" False
+    T.mkMenuItem "Option" "option.html" False,
+    T.mkMenuItem "for comprehension" "for-comprehension.html" False
 ]
 
 let createListScala = ''

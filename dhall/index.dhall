@@ -70,7 +70,8 @@ let menu = [
     T.mkMenuItem "Basics" "index.html" True,
     T.mkMenuItem "ADTs" "adts.html" False,
 	T.mkMenuItem "Lists" "lists.html" False,
-	T.mkMenuItem "Option" "option.html" False
+	T.mkMenuItem "Option" "option.html" False,
+	T.mkMenuItem "for comprehension" "for-comprehension.html" False
 ]
 
 in Toplevel.topLevel "Basics" menu [
