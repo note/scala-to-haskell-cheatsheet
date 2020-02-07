@@ -37,21 +37,21 @@ compute = undefined
 
 let andThenScala = ''
 // Given:
-> val toInt: String => Int = Integer.parseInt
-> val triple: Int => Int = x => 3 * x
+val toInt: String => Int = Integer.parseInt
+val triple: Int => Int = x => 3 * x
 
 // You can compose them:
-> (toInt andThen triple)("5")
-15
+(toInt andThen triple)("5")
+// res: 15
 ''
 
 let andThenHaskell = ''
 -- Given:
-> toInt  :: String -> Int; toInt  x = read x
-> triple :: Int    -> Int; triple x = 3 * x
+toInt  :: String -> Int; toInt  x = read x
+triple :: Int    -> Int; triple x = 3 * x
 
--- You can compose them:Bool
-> (toInt >>> triple) "5"
+-- You can compose them:
+(toInt >>> triple) "5"
 15
 ''
 
@@ -68,7 +68,9 @@ let composeHaskell = ''
 -- TODO: use unit type so we don't need to replicate menu in a few places
 let menu = [
     T.mkMenuItem "Basics" "index.html" True,
-    T.mkMenuItem "ADTs" "adts.html" False
+    T.mkMenuItem "ADTs" "adts.html" False,
+	T.mkMenuItem "Lists" "lists.html" False,
+	T.mkMenuItem "Option" "option.html" False
 ]
 
 in Toplevel.topLevel "Basics" menu [

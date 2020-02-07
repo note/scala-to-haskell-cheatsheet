@@ -1,3 +1,7 @@
+/*
+ * Copied with a few modifications from https://github.com/fabiomsr/from-java-to-kotlin
+ */
+
 body {
     font-family: "Helvetica Neue", sans-serif;
     margin: 0;
@@ -8,12 +12,8 @@ body * {
 }
 
 .section {
-    background-color: #f4f4f4;
-    padding: 4em 3em;
-}
-
-.section:nth-child(2n) {
     background-color: white;
+    padding: 4em 3em;
 }
 
 .title {
@@ -73,6 +73,15 @@ body * {
 }
 .section:nth-child(2n) .code {
     background-color: #f4f4f4;
+}
+
+.explanation code {
+    background-color: #f0f0f0;
+}
+
+.supplementaryCode code {
+    background-color: #f9f9f9;
+    font-style: italic;
 }
 
 #fork-me {
