@@ -40,7 +40,17 @@ let instantiateCCScala = "Point(3, 15)"
 let instantiateCCHaskell = "Point 3 15"
 
 let accessingFieldsScala = "Point(3, 15).x"
-let accessingFieldsHaskell = "x (Point 3 5)"
+let accessingFieldsHaskellCode = "x (Point 3 5)"
+
+
+let accessingFieldsHaskell = 
+    let quotedCode = F.quoteCode "module YourModule ( Point(Point, x, y) ) where ..."
+    in hask "Haskell" accessingFieldsHaskellCode (Some ''
+It will work only if you exported `x` and imported it to scope where you use it. You can export field accessors with:
+${quotedCode}
+'')
+
+
 
 let copyScala = "Point(3, 15).copy(y = 100)"
 let copyHaskell = "(Point 3 15) { y = 100 }"
@@ -91,7 +101,7 @@ in Toplevel.topLevel "Algebraic Data Types" menu [
 	F.mkComparison "Defining case classes (product types)" caseClassScala [caseClassHask],
 	F.mkComparison "Defining product types with some typeclasses derived" caseClassScala [ccDerivedHask],
 	F.mkSimpleComparison "Instantiating case classes" instantiateCCScala instantiateCCHaskell,
-    F.mkSimpleComparison "Accessing fields" accessingFieldsScala accessingFieldsHaskell,
+    F.mkComparison "Accessing fields" accessingFieldsScala [accessingFieldsHaskell],
     F.mkSimpleComparison ".copy on case classes" copyScala copyHaskell,
     F.mkComparison "Defining sealed trais hierarchy (sum types)" sumTypeScala [sumTypeHask],
     F.mkSimpleComparison "ADTs (product types and sum types)" adtScala adtHaskell

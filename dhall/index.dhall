@@ -51,6 +51,7 @@ toInt  :: String -> Int; toInt  x = read x
 triple :: Int    -> Int; triple x = 3 * x
 
 -- You can compose them:
+import Control.Arrow
 (toInt >>> triple) "5"
 -- res: 15
 ''

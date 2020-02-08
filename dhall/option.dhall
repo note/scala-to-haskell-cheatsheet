@@ -49,7 +49,9 @@ let haskellMap = ''
 ''
 
 let haskMap = [
-    hask "Haskell" haskellMap (Some "${F.code "<$>"} is an infix operator for ${F.code "fmap"}. ${F.code "fmap"} is defined in terms of Functor and Maybe has an instance of Functor")
+    hask "Haskell" haskellMap (Some ''
+${F.code "<$>"} is not ${F.code "Maybe"}-specific: ${F.code "<$>"} is an infix operator for ${F.code "fmap"}. ${F.code "fmap"} is defined in terms of Functor and Maybe has an instance of Functor
+'')
 ]
 
 in Toplevel.topLevel "Options" menu [
