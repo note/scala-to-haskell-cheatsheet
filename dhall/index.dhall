@@ -19,11 +19,13 @@ triple x = 3 * x
 ''
 
 let funDef2Explanation = ''
-Note the :{ and :} in the first and last line. Besides of that it's the same as one would define the function in a source file.
+Note the ${F.code ":{"} and ${F.code ":}"} in the first and last line. Besides of that it's the same as one would define the function in a source file.
 ''
 
 let haskellFunctionsDefs = [simpleHask funDef0,
-							hask "Haskell (GHCi)" funDef1 (Some "Many tutorials use let triple .... There's no difference between those two notations in GHCi so it's up to you to decide ."),
+							hask "Haskell (GHCi)" funDef1 (Some ''
+							Many tutorials use ${F.code "let triple :: ..."}. There's <a href="https://stackoverflow.com/a/42988998/429311">no difference</a> between those two notations in GHCi so it's up to you to decide .
+							''),
 							hask "Haskell (GHCi) - alternative" funDef2 (Some funDef2Explanation)
 						   ]
 

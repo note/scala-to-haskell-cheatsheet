@@ -54,7 +54,7 @@ ${F.code "<$>"} is not ${F.code "Maybe"}-specific: ${F.code "<$>"} is an infix o
 '')
 ]
 
-in Toplevel.topLevel "Options" menu [
+in Toplevel.topLevel "Option" menu [
     F.mkSimpleComparison "Create a non-empty Option" scalaNonEmpty haskellNonEmpty,
     F.mkSimpleComparison "Create an empty Option" scalaEmpty haskellEmpty,
     F.mkSimpleComparison "Fold over an Option" scalaFold haskellFold,

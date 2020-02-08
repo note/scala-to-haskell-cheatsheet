@@ -99,7 +99,7 @@ body * {
     letter-spacing: 0.05em;
 }
 
-ul {
+ul#menu {
     list-style-type: none;
     margin: 0;
     padding: 0;

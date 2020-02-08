@@ -29,11 +29,11 @@ data Point = Point { x :: Int
 
 let ccDerivedHask = hask "Haskell" ccDerivedHaskell (Some ''
 <ul>
-    <li>Eq - with instance of that typeclass (Point 1 1) == (Point 123 321) will compile.</li>
-    <li>Generic - you can think of it as kind of shapeless.LabelledGeneric - something that is a base for other typeclass derivation mechanisms. For example aeson (JSON library) can generate codecs for your data type providing it has an instance of Generic. I know it sounds vague but my current understanding is vague too.</li>
-    <li>Show - with instance of that typeclass you can show (Point 1 1) which returns a string. We can compare it to toString mechanism known from JVM world.</li>
+    <li>${F.code "Eq"} - with instance of that typeclass ${F.code "(Point 1 1) == (Point 123 321)"} will compile.</li>
+    <li>${F.code "Generic"} - you can think of it as kind of ${F.code "shapeless.LabelledGeneric"} - something that is a base for other typeclass derivation mechanisms. For example aeson (JSON library) can generate codecs for your data type providing it has an instance of ${F.code "Generic"}. I know it sounds vague but my current understanding is vague too.</li>
+    <li>${F.code "Show"} - with instance of that typeclass you can show ${F.code "(Point 1 1)"} which returns a string. We can compare it to ${F.code "toString"} mechanism known from JVM world.</li>
 </ul>
-You don't need {-# LANGUAGE DeriveGeneric #-} if you don't want to derive Generic - you would still be able to derive e.g. Show.
+You don't need ${F.code "{-# LANGUAGE DeriveGeneric #-}"} if you don't want to derive ${F.code "Generic"} - you would still be able to derive e.g. ${F.code "Show"}.
 '')
 
 let instantiateCCScala = "Point(3, 15)"
