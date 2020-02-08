@@ -28,9 +28,9 @@ res = do a <- maybeInt
 ''
 
 let haskellFor = [hask "Haskell" haskellForCode (Some ''
-${F.code "return"} is not a keyword - it's just a function of type ${F.code "Monad m => a -> m a"} so you can think of it as cats ${F.code "pure"}.
+${F.code "return"} is not a keyword - it's just a function of type ${F.code "Monad m => a -> m a"} so you can think of it as ${F.code "pure"} in cats or monix.
 <br /><br />
-<b>This form of do notation is whitespace-sensitive.</b> Subsequent terms (${F.code "a"}, ${F.code "b"}, ${F.code "c"} in above example) must be aligned horizontally.
+<b>This form of do notation is whitespace-sensitive.</b> Subsequent terms (${F.code "a"}, ${F.code "b"}, ${F.code "c"} in the example above) must be aligned horizontally.
 '')]
 
 -- TODO: use unit type so we don't need to replicate menu in a few places

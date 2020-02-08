@@ -6,7 +6,7 @@ let renderHaskellCard = \(explained: T.Explained) ->
 	let explainedText = Optional/fold Text explained.explanation Text (\(x: Text) -> x) ""
 	in ''
         <div class="card"><div class="lang">${explained.title}</div><pre class="code"><code class="lang-haskell">${explained.code}</code></pre>
-  			<div class="explanation">${explainedText}</div>
+  			<div class="explanation"><p>${explainedText}</p></div>
         </div> 
 ''
 

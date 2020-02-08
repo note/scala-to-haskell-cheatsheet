@@ -49,10 +49,12 @@ let haskellMap = ''
 ''
 
 let haskMap = [
-    hask "Haskell" haskellMap (Some "${F.code "<$>"} is an infix operator for ${F.code "fmap"}. ${F.code "fmap"} is defined in terms of Functor and Maybe has an instance of Functor")
+    hask "Haskell" haskellMap (Some ''
+${F.code "<$>"} is not ${F.code "Maybe"}-specific: ${F.code "<$>"} is an infix operator for ${F.code "fmap"}. ${F.code "fmap"} is defined in terms of Functor and Maybe has an instance of Functor
+'')
 ]
 
-in Toplevel.topLevel "Options" menu [
+in Toplevel.topLevel "Option" menu [
     F.mkSimpleComparison "Create a non-empty Option" scalaNonEmpty haskellNonEmpty,
     F.mkSimpleComparison "Create an empty Option" scalaEmpty haskellEmpty,
     F.mkSimpleComparison "Fold over an Option" scalaFold haskellFold,
