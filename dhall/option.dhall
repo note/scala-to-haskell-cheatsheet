@@ -5,15 +5,6 @@ let T = ./common/types.dhall
 let hask = T.mkExplained
 let simpleHask = F.simpleHask
 
--- TODO: use unit type so we don't need to replicate menu in a few places
-let menu = [
-    T.mkMenuItem "Basics" "index.html" False,
-    T.mkMenuItem "ADTs" "adts.html" False,
-	T.mkMenuItem "Lists" "lists.html" False,
-    T.mkMenuItem "Option" "option.html" True,
-    T.mkMenuItem "for comprehension" "for-comprehension.html" False
-]
-
 let scalaNonEmpty = ''
 val a: Option[Int] = Some(5)
 ''
@@ -54,7 +45,7 @@ ${F.code "<$>"} is not ${F.code "Maybe"}-specific: ${F.code "<$>"} is an infix o
 '')
 ]
 
-in Toplevel.topLevel "Option" menu [
+in Toplevel.topLevel "Option" T.SubPage.Option [
     F.mkSimpleComparison "Create a non-empty Option" scalaNonEmpty haskellNonEmpty,
     F.mkSimpleComparison "Create an empty Option" scalaEmpty haskellEmpty,
     F.mkSimpleComparison "Fold over an Option" scalaFold haskellFold,

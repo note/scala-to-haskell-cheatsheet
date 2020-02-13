@@ -5,15 +5,6 @@ let T = ./common/types.dhall
 let hask = T.mkExplained
 let simpleHask = F.simpleHask
 
--- TODO: use unit type so we don't need to replicate menu in a few places
-let menu = [
-    T.mkMenuItem "Basics" "index.html" False,
-    T.mkMenuItem "ADTs" "adts.html" False,
-    T.mkMenuItem "Lists" "lists.html" True,
-    T.mkMenuItem "Option" "option.html" False,
-    T.mkMenuItem "for comprehension" "for-comprehension.html" False
-]
-
 let createListScala = ''
 List(1, 2, 3)
 ''
@@ -65,7 +56,7 @@ let flatMapListHaskell = ''
 -- res: [1,1,2,2,3,3]
 ''
 
-in Toplevel.topLevel "Lists" menu [
+in Toplevel.topLevel "Lists" T.SubPage.Lists [
 	F.mkSimpleComparison "Creating a list" createListScala createListHaskell,
     F.mkSimpleComparison "Creating a range" rangeScala rangeHaskell,
     F.mkComparison "Map through a list" mapListScala mapListHaskell,

@@ -88,16 +88,7 @@ data ClientError = ParsingError { input :: String, msg :: String }
                  | OtherError
 ''
 
--- TODO: use unit type so we don't need to replicate menu in a few places
-let menu = [
-    T.mkMenuItem "Basics" "index.html" False,
-    T.mkMenuItem "ADTs" "adts.html" True,
-    T.mkMenuItem "Lists" "lists.html" False,
-    T.mkMenuItem "Option" "option.html" False,
-    T.mkMenuItem "for comprehension" "for-comprehension.html" False
-]
-
-in Toplevel.topLevel "Algebraic Data Types" menu [
+in Toplevel.topLevel "Algebraic Data Types" T.SubPage.Adts [
 	F.mkComparison "Defining case classes (product types)" caseClassScala [caseClassHask],
 	F.mkComparison "Defining product types with some typeclasses derived" caseClassScala [ccDerivedHask],
 	F.mkSimpleComparison "Instantiating case classes" instantiateCCScala instantiateCCHaskell,

@@ -1,3 +1,5 @@
+let Prelude = https://prelude.dhall-lang.org/package.dhall
+
 let Comparison = 
 	{ name: Text
 	, scalaCode: Text
@@ -16,10 +18,41 @@ let ExplainedComparison =
 	, haskell: List Explained
 	}
 
+let SubPage = < Basics | Adts | Lists | Option | ForComprehension >
+
+-- SubPage/equals as in https://github.com/dhall-lang/dhall-lang/issues/164#issuecomment-585536570
+let handlers =
+      { Basics = False, Adts = False, Lists = False, Option = False, ForComprehension = False }
+
+let isBasics = \(t : SubPage) -> merge (handlers // { Basics = True }) t
+
+let isAdts = \(t : SubPage) -> merge (handlers // { Adts = True }) t
+
+let isLists = \(t : SubPage) -> merge (handlers // { Lists = True }) t
+
+let isOption = \(t : SubPage) -> merge (handlers // { Option = True }) t
+
+let isForComprehension = \(t : SubPage) -> merge (handlers // { ForComprehension = True }) t
+
+-- Copied from: https://github.com/dhall-lang/dhall-lang/issues/164#issuecomment-585536570
+let makeEquals
+    : forall (a : Type) -> List (a -> Bool) -> a -> a -> Bool
+    =     \(a : Type)
+      ->  \(predicates : List (a -> Bool))
+      ->  \(l : a)
+      ->  \(r : a)
+      ->  let apply = \(predicate : a -> Bool) -> predicate l && predicate r
+          in  Prelude.Bool.or
+                (Prelude.List.map (a -> Bool) Bool apply predicates)
+
+let SubPage/equals
+    : SubPage -> SubPage -> Bool
+    = makeEquals SubPage [ isBasics, isAdts, isLists, isOption, isForComprehension ]
+
 let MenuItem = 
-	{ name: Text
+	{ subPage: SubPage
+	, name: Text
 	, filename: Text
-	, isActive: Bool
 	}
 
 let mkComparison = \(scalaCode: Text)   -> 
@@ -44,13 +77,13 @@ let mkExplainedComparison = \(comparisonName: Text) ->
 								haskell = explained
 							}
 
-let mkMenuItem = \(name: Text) ->
+let mkMenuItem = \(subPage: SubPage) ->
+				 \(name: Text) ->
 				 \(filename: Text) ->
-				 \(isActive: Bool) ->
 				 {
-					 name = name,
-					 filename = filename,
-					 isActive = isActive
+					 subPage  = subPage,
+					 name     = name,
+					 filename = filename
 				 }
 
 in {
@@ -58,8 +91,10 @@ in {
 	Explained  = Explained,
 	ExplainedComparison = ExplainedComparison,
 	MenuItem = MenuItem,
+	SubPage = SubPage,
 	mkComparison = mkComparison,
 	mkExplained = mkExplained,
 	mkExplainedComparison = mkExplainedComparison,
-	mkMenuItem = mkMenuItem
+	mkMenuItem = mkMenuItem,
+	SubPage/equals = SubPage/equals
 }

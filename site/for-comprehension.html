@@ -1,11 +1,3 @@
-let Prelude = https://prelude.dhall-lang.org/package.dhall
-let T = ./types.dhall
-let F = ./functions.dhall
-let Menu = ./menu.dhall
-
-let topLevel = \(subpageTitle: Text) -> \(activeSubPage: T.SubPage) -> \(cases: List T.ExplainedComparison) ->
-  let blob = List/fold T.ExplainedComparison cases Text (\(acc: T.ExplainedComparison) -> \(curr: Text) -> (F.renderExplainedComparison acc) ++ curr) ""
-  in ''
 <!DOCTYPE html><html>
 <head>
   <title>From Scala to Haskell</title>
@@ -21,18 +13,48 @@ let topLevel = \(subpageTitle: Text) -> \(activeSubPage: T.SubPage) -> \(cases: 
 
   <div id="note">From Scala to Haskell</div>
   <ul id="menu">
-    ${Prelude.Text.concat (Menu.renderMenu activeSubPage)}
+    <li><a href="index.html">Basics</a></li>
+<li><a href="adts.html">ADTs</a></li>
+<li><a href="lists.html">Lists</a></li>
+<li><a href="option.html">Option</a></li>
+<li><a href="for-comprehension.html" class="selected">for comprehension</a></li>
+
   </ul>
 
-  <div class="section"><div class="title">${subpageTitle}</div>
+  <div class="section"><div class="title">for comprehension</div>
 
-    ${blob}
+    <div class="case">
+	<div class="name"></div>
+	  <div class="pair">
+        <div class="card"><div class="lang">Scala</div><pre class="code"><code class="lang-scala">// given:
+// maybeInt: Option[Int] = ???
+
+res: Option[(Int, Int, Int)] = for {
+    a <- maybeInt
+    b <- maybeInt
+    c <- maybeInt
+} yield (a, b, c)
+</code></pre>
+        </div>
+                <div class="card"><div class="lang">Haskell</div><pre class="code"><code class="lang-haskell">-- given:
+-- maybeInt :: Maybe Int
+
+res :: Maybe (Int, Int, Int)
+res = do a <- maybeInt
+         b <- maybeInt
+         c <- maybeInt
+         return (a, b, c)
+</code></pre>
+  			<div class="explanation"><p><code>return</code> is not a keyword - it's just a function of type <code>Monad m => a -> m a</code> so you can think of it as <code>pure</code> in cats or monix.
+<br /><br />
+<b>This form of do notation is whitespace-sensitive.</b> Subsequent terms (<code>a</code>, <code>b</code>, <code>c</code> in the example above) must be aligned horizontally.
+</p></div>
+        </div> 
+
+      </div>
+</div>
+
     
   </div>
   </body>
 </html>
-''
-
-in {
-  topLevel = topLevel
-}

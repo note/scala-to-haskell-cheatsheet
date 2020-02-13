@@ -33,15 +33,6 @@ ${F.code "return"} is not a keyword - it's just a function of type ${F.code "Mon
 <b>This form of do notation is whitespace-sensitive.</b> Subsequent terms (${F.code "a"}, ${F.code "b"}, ${F.code "c"} in the example above) must be aligned horizontally.
 '')]
 
--- TODO: use unit type so we don't need to replicate menu in a few places
-let menu = [
-    T.mkMenuItem "Basics" "index.html" False,
-    T.mkMenuItem "ADTs" "adts.html" False,
-	T.mkMenuItem "Lists" "lists.html" False,
-	T.mkMenuItem "Option" "option.html" False,
-    T.mkMenuItem "for comprehension" "for-comprehension.html" True
-]
-
-in Toplevel.topLevel "for comprehension" menu [
+in Toplevel.topLevel "for comprehension" T.SubPage.ForComprehension [
 	F.mkComparison "" scalaFor haskellFor
 ]
