@@ -6,13 +6,6 @@ set -e
 source functions.sh
 setup_dhall_bin
 
-for f in dhall/**/*
-do
-    echo "dhall freeze: $f"
-    cat $f | dhall --ascii freeze > "$f.frozen"
-    mv "$f.frozen" $f
-done
-
 # `find` like one below is not an option because it always returns exit code 0, even in case of dhall failure
 # find dhall -mindepth 1 -maxdepth 1 -name "*.dhall" -print -exec bash -c "dhall text <<< './'{} > {}.html" \;
 
