@@ -68,16 +68,7 @@ let composeHaskell = ''
 -- res: 15
 ''
 
--- TODO: use unit type so we don't need to replicate menu in a few places
-let menu = [
-    T.mkMenuItem "Basics" "index.html" True,
-    T.mkMenuItem "ADTs" "adts.html" False,
-	T.mkMenuItem "Lists" "lists.html" False,
-	T.mkMenuItem "Option" "option.html" False,
-	T.mkMenuItem "for comprehension" "for-comprehension.html" False
-]
-
-in Toplevel.topLevel "Basics" menu [
+in Toplevel.topLevel "Basics" T.SubPage.Basics [
 	F.mkComparison "Defining functions" scalaFunctionDef haskellFunctionsDefs,
 	F.mkSimpleComparison "???" questionMarksScala questionMarksHaskell,
 	F.mkSimpleComparison "Function composition (andThen style)" andThenScala andThenHaskell,

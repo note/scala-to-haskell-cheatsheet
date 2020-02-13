@@ -17,5 +17,7 @@ do
     filename="${filename%.*}"
 
     echo "Generate html from $f"
-    $DHALL_BIN text <<< "./$f" > "./site/$filename.html"
+    $DHALL_BIN text <<< "./$f" > "./dhall/$filename.html"
+    echo "Verify html: ./dhall/$filename.html vs ./site/$filename.html"
+    diff "./dhall/$filename.html" "./site/$filename.html"
 done

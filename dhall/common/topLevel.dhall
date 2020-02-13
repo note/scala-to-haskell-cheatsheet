@@ -1,18 +1,9 @@
 let Prelude = https://prelude.dhall-lang.org/package.dhall
 let T = ./types.dhall
 let F = ./functions.dhall
+let Menu = ./menu.dhall
 
-let renderMenuItem = \(menuItem: T.MenuItem) ->
-  if menuItem.isActive then
-    ''
-    <li><a href="${menuItem.filename}" class="selected">${menuItem.name}</a></li>
-    ''
-  else
-    ''
-    <li><a href="${menuItem.filename}">${menuItem.name}</a></li>
-    ''
-
-let topLevel = \(subpageTitle: Text) -> \(menuItems: List T.MenuItem) -> \(cases: List T.ExplainedComparison) ->
+let topLevel = \(subpageTitle: Text) -> \(activeSubPage: T.SubPage) -> \(cases: List T.ExplainedComparison) ->
   let blob = List/fold T.ExplainedComparison cases Text (\(acc: T.ExplainedComparison) -> \(curr: Text) -> (F.renderExplainedComparison acc) ++ curr) ""
   in ''
 <!DOCTYPE html><html>
@@ -30,7 +21,7 @@ let topLevel = \(subpageTitle: Text) -> \(menuItems: List T.MenuItem) -> \(cases
 
   <div id="note">From Scala to Haskell</div>
   <ul id="menu">
-    ${Prelude.Text.concat (Prelude.List.map T.MenuItem Text renderMenuItem menuItems)}
+    ${Prelude.Text.concat (Menu.renderMenu activeSubPage)}
   </ul>
 
   <div class="section"><div class="title">${subpageTitle}</div>
