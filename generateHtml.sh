@@ -19,3 +19,7 @@ do
     echo "Generate html from $f"
     $DHALL_BIN text <<< "./$f" > "./site/$filename.html"
 done
+
+# In future we can add dhall format but at the moment results are not satisfactory, e.g. multiline strings
+# with interpolation are getting splitted into a lot of lines
+# cat dhall/common/functions.dhall | dhall --ascii format > out.dhall

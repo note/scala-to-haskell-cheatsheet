@@ -1,68 +1,113 @@
-let Prelude = https://prelude.dhall-lang.org/package.dhall
+let Prelude =
+      https://prelude.dhall-lang.org/package.dhall sha256:4aa8581954f7734d09b7b21fddbf5d8df901a44b54b4ef26ea71db92de0b1a12
 
 let T = ./types.dhall
 
-let renderHaskellCard = \(explained: T.Explained) -> 
-	let explainedText = Optional/fold Text explained.explanation Text (\(x: Text) -> x) ""
-	in ''
-        <div class="card"><div class="lang">${explained.title}</div><pre class="code"><code class="lang-haskell">${explained.code}</code></pre>
-  			<div class="explanation"><p>${explainedText}</p></div>
-        </div> 
-''
+let renderHaskellCard =
+          \(explained : T.Explained)
+      ->  let explainedText =
+                Optional/fold
+                  Text
+                  explained.explanation
+                  Text
+                  (\(x : Text) -> x)
+                  ""
 
-let renderPair = \(scalaCode: Text) -> \(explained: T.Explained) -> ''
-	  <div class="pair">
-        <div class="card"><div class="lang">Scala</div><pre class="code"><code class="lang-scala">${scalaCode}</code></pre>
-        </div>
-        ${renderHaskellCard explained}
-      </div>
-''
+          in  ''
+                      <div class="card"><div class="lang">${explained.title}</div><pre class="code"><code class="lang-haskell">${explained.code}</code></pre>
+                			<div class="explanation"><p>${explainedText}</p></div>
+                      </div> 
+              ''
 
-let renderIncompletePair = \(explained: T.Explained) -> ''
-	  <div class="pair">
-        <div class="card">
-        </div>
-        ${renderHaskellCard explained}
-      </div>
-''
+let renderPair =
+          \(scalaCode : Text)
+      ->  \(explained : T.Explained)
+      ->  ''
+          	  <div class="pair">
+                  <div class="card"><div class="lang">Scala</div><pre class="code"><code class="lang-scala">${scalaCode}</code></pre>
+                  </div>
+                  ${renderHaskellCard explained}
+                </div>
+          ''
 
-let renderExplainedComparison = \(comparison: T.ExplainedComparison) -> 
-	let head 		= (List/head T.Explained comparison.haskell)
-	let headAsText  = Optional/fold T.Explained head Text (\(x: T.Explained) -> renderPair comparison.scalaCode x) ""
-	let tail = Prelude.List.drop 1 T.Explained comparison.haskell
-	let renderedElements = Prelude.List.map T.Explained Text renderIncompletePair tail
-	let elementsAsText     = List/fold Text renderedElements Text (\(acc: Text) -> \(curr: Text) -> acc ++ curr) ""
-in ''
-<div class="case">
-	<div class="name">${comparison.comparisonName}</div>
-'' ++ headAsText ++ elementsAsText ++ ''
-</div>
-''
+let renderIncompletePair =
+          \(explained : T.Explained)
+      ->  ''
+          	  <div class="pair">
+                  <div class="card">
+                  </div>
+                  ${renderHaskellCard explained}
+                </div>
+          ''
 
-let simpleHask = \(code: Text) -> T.mkExplained "Haskell" code (None Text)
+let renderExplainedComparison =
+          \(comparison : T.ExplainedComparison)
+      ->  let head = List/head T.Explained comparison.haskell
 
-let mkSimpleComparison = \(name: Text) -> \(scalaCode: Text) -> \(haskellCode: Text) -> 
-	T.mkExplainedComparison name scalaCode [(simpleHask haskellCode)]
+          let headAsText =
+                Optional/fold
+                  T.Explained
+                  head
+                  Text
+                  (\(x : T.Explained) -> renderPair comparison.scalaCode x)
+                  ""
 
-let mkComparison = \(name: Text) -> \(scalaCode: Text) -> \(haskellExplanations: List T.Explained) -> 
-	T.mkExplainedComparison name scalaCode haskellExplanations
+          let tail = Prelude.List.drop 1 T.Explained comparison.haskell
 
-let quoteExplanation = \(code: Text) -> ''
-<pre class="supplementaryCode"><code>${code}</code></pre>
-''
+          let renderedElements =
+                Prelude.List.map T.Explained Text renderIncompletePair tail
 
-let quoteCode = \(code: Text) -> ''
-<pre class="code"><code>${code}</code></pre>
-''
+          let elementsAsText =
+                List/fold
+                  Text
+                  renderedElements
+                  Text
+                  (\(acc : Text) -> \(curr : Text) -> acc ++ curr)
+                  ""
 
-let code = \(x: Text) -> "<code>${x}</code>"
+          in      ''
+                  <div class="case">
+                  	<div class="name">${comparison.comparisonName}</div>
+                  ''
+              ++  headAsText
+              ++  elementsAsText
+              ++  ''
+                  </div>
+                  ''
 
-in {
-	code						= code,
-	mkComparison 		  		= mkComparison,
-	mkSimpleComparison 		  	= mkSimpleComparison,
-	quoteCode					= quoteCode,
-	quoteExplanation			= quoteExplanation,
-	renderExplainedComparison 	= renderExplainedComparison,
-	simpleHask					= simpleHask
-}
+let simpleHask = \(code : Text) -> T.mkExplained "Haskell" code (None Text)
+
+let mkSimpleComparison =
+          \(name : Text)
+      ->  \(scalaCode : Text)
+      ->  \(haskellCode : Text)
+      ->  T.mkExplainedComparison name scalaCode [ simpleHask haskellCode ]
+
+let mkComparison =
+          \(name : Text)
+      ->  \(scalaCode : Text)
+      ->  \(haskellExplanations : List T.Explained)
+      ->  T.mkExplainedComparison name scalaCode haskellExplanations
+
+let quoteExplanation =
+          \(code : Text)
+      ->  ''
+          <pre class="supplementaryCode"><code>${code}</code></pre>
+          ''
+
+let quoteCode =
+          \(code : Text)
+      ->  ''
+          <pre class="code"><code>${code}</code></pre>
+          ''
+
+let code = \(x : Text) -> "<code>${x}</code>"
+
+in  { code = code
+    , mkComparison = mkComparison
+    , mkSimpleComparison = mkSimpleComparison
+    , quoteCode = quoteCode
+    , quoteExplanation = quoteExplanation
+    , renderExplainedComparison = renderExplainedComparison
+    , simpleHask = simpleHask
+    }
