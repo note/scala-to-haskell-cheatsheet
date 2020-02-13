@@ -1,7 +1,7 @@
 language: bash
 
 script:
-  - ./generateHtml.sh
+  - ./verifyHtml.sh
 
 deploy:
   local_dir: site
