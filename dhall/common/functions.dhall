@@ -1,5 +1,5 @@
 let Prelude =
-      https://prelude.dhall-lang.org/package.dhall sha256:4aa8581954f7734d09b7b21fddbf5d8df901a44b54b4ef26ea71db92de0b1a12
+      https://prelude.dhall-lang.org/package.dhall sha256:c1b3fc613aabfb64a9e17f6c0d70fe82016a030beedd79851730993e9083fde2
 
 let T = ./types.dhall
 
