@@ -1,5 +1,5 @@
 let Prelude =
-      https://prelude.dhall-lang.org/package.dhall sha256:c1b3fc613aabfb64a9e17f6c0d70fe82016a030beedd79851730993e9083fde2
+      https://prelude.dhall-lang.org/package.dhall sha256:eb693342eb769f782174157eba9b5924cf8ac6793897fc36a31ccbd6f56dafe2
 
 let Comparison = { name : Text, scalaCode : Text, haskellCode : Text }
 
@@ -31,14 +31,13 @@ let isForComprehension =
 
 let makeEquals
     : forall (a : Type) -> List (a -> Bool) -> a -> a -> Bool
-    =     \(a : Type)
-      ->  \(predicates : List (a -> Bool))
-      ->  \(l : a)
-      ->  \(r : a)
-      ->  let apply = \(predicate : a -> Bool) -> predicate l && predicate r
+    = \(a : Type) ->
+      \(predicates : List (a -> Bool)) ->
+      \(l : a) ->
+      \(r : a) ->
+        let apply = \(predicate : a -> Bool) -> predicate l && predicate r
 
-          in  Prelude.Bool.or
-                (Prelude.List.map (a -> Bool) Bool apply predicates)
+        in  Prelude.Bool.or (Prelude.List.map (a -> Bool) Bool apply predicates)
 
 let SubPage/equals
     : SubPage -> SubPage -> Bool
@@ -49,39 +48,34 @@ let SubPage/equals
 let MenuItem = { subPage : SubPage, name : Text, filename : Text }
 
 let mkComparison =
-          \(scalaCode : Text)
-      ->  \(haskellCode : Text)
-      ->  { scalaCode = scalaCode, haskellCode = haskellCode }
+      \(scalaCode : Text) -> \(haskellCode : Text) -> { scalaCode, haskellCode }
 
 let mkExplained =
-          \(title : Text)
-      ->  \(code : Text)
-      ->  \(explanation : Optional Text)
-      ->  { title = title, code = code, explanation = explanation }
+      \(title : Text) ->
+      \(code : Text) ->
+      \(explanation : Optional Text) ->
+        { title, code, explanation }
 
 let mkExplainedComparison =
-          \(comparisonName : Text)
-      ->  \(scalaCode : Text)
-      ->  \(explained : List Explained)
-      ->  { comparisonName = comparisonName
-          , scalaCode = scalaCode
-          , haskell = explained
-          }
+      \(comparisonName : Text) ->
+      \(scalaCode : Text) ->
+      \(explained : List Explained) ->
+        { comparisonName, scalaCode, haskell = explained }
 
 let mkMenuItem =
-          \(subPage : SubPage)
-      ->  \(name : Text)
-      ->  \(filename : Text)
-      ->  { subPage = subPage, name = name, filename = filename }
+      \(subPage : SubPage) ->
+      \(name : Text) ->
+      \(filename : Text) ->
+        { subPage, name, filename }
 
-in  { Comparison = Comparison
-    , Explained = Explained
-    , ExplainedComparison = ExplainedComparison
-    , MenuItem = MenuItem
-    , SubPage = SubPage
-    , mkComparison = mkComparison
-    , mkExplained = mkExplained
-    , mkExplainedComparison = mkExplainedComparison
-    , mkMenuItem = mkMenuItem
-    , SubPage/equals = SubPage/equals
+in  { Comparison
+    , Explained
+    , ExplainedComparison
+    , MenuItem
+    , SubPage
+    , mkComparison
+    , mkExplained
+    , mkExplainedComparison
+    , mkMenuItem
+    , SubPage/equals
     }

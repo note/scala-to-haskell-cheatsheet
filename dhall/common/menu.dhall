@@ -1,7 +1,7 @@
 let T = ./types.dhall
 
 let Prelude =
-      https://prelude.dhall-lang.org/package.dhall sha256:c1b3fc613aabfb64a9e17f6c0d70fe82016a030beedd79851730993e9083fde2
+      https://prelude.dhall-lang.org/package.dhall sha256:eb693342eb769f782174157eba9b5924cf8ac6793897fc36a31ccbd6f56dafe2
 
 let menu =
       [ T.mkMenuItem T.SubPage.Basics "Basics" "index.html"
@@ -15,20 +15,18 @@ let menu =
       ]
 
 let renderMenuItem =
-          \(activeSubPage : T.SubPage)
-      ->  \(menuItem : T.MenuItem)
-      ->        if T.SubPage/equals menuItem.subPage activeSubPage
-
-          then  ''
-                <li><a href="${menuItem.filename}" class="selected">${menuItem.name}</a></li>
-                ''
-
-          else  ''
-                <li><a href="${menuItem.filename}">${menuItem.name}</a></li>
-                ''
+      \(activeSubPage : T.SubPage) ->
+      \(menuItem : T.MenuItem) ->
+        if    T.SubPage/equals menuItem.subPage activeSubPage
+        then  ''
+              <li><a href="${menuItem.filename}" class="selected">${menuItem.name}</a></li>
+              ''
+        else  ''
+              <li><a href="${menuItem.filename}">${menuItem.name}</a></li>
+              ''
 
 let renderMenu =
-          \(activeSubPage : T.SubPage)
-      ->  Prelude.List.map T.MenuItem Text (renderMenuItem activeSubPage) menu
+      \(activeSubPage : T.SubPage) ->
+        Prelude.List.map T.MenuItem Text (renderMenuItem activeSubPage) menu
 
-in  { renderMenu = renderMenu }
+in  { renderMenu }
